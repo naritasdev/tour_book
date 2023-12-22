@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Humberto Yances - Naritas">
+    <meta name="generator" content="">
+    <title>TITLE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <main>
+        <div class="container px-3 my-3">
+            <div class="alert alert-light" role="alert">
+                {% if hotel == 'qr' %} QUERO {% else %} {{hotel}} {% endif %} Estás a punto de mejorar tu experiencia en Cartagena de Indias, buena elección!
+            </div>
+            <header class="p-1 mb-1">
+                <div class="container">
+                    <p class="lead mb-4">Hola {{name}}! Queremos que tengas una memorable experiencia para tu estadía de {{nights}} noches en Cartagena de Indias. Has hecho y¿una buena elección para hacer, solicita abajo tu reserva con la agencia {{agency}}.</p>
+                    {% for item in activity %}
+                    <div class="card">
+                        <!-- style="width: 18rem;" -->
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ '/home/humberto/desarrollo/datos/hoteles/data_science/client_segm/apps/static/image5_3.png'|resize('300x300', format='jpg') }}" class="card-img-top img-fluid" alt="{{ item.name }}">
+                                <div class="card-img-overlay">
+                                    <span class="badge {% if item.category == 'Islands' or 'Nature' %} text-bg-success {%else%} text-bg-secondary {%endif%}">{{ item.category }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><strong>{{ item.name }}</strong> <span class="badge rounded-pill text-bg-info">Tiempo: {{ item.hours }} horas</span></h5>
+                                    <p class="card-text">{{ item.description|safe }}</p>
+                                    <a href="#" class="btn btn-primary">Book!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </header>
+        </div>
+        <div class="container px-3 my-3">
+            <form id="bookTourForm" method="post">
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="nombreName" type="text" placeholder="Nombre / Name" data-sb-validations="required" value="{{name}}"/>
+                    <label for="nombreName">Nombre / Name</label>
+                    <div class="invalid-feedback" data-sb-feedback="nombreName:required">Nombre / Name is required.</div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" type="email" placeholder="Email" data-sb-validations="required,email" value={{email}}/>
+                    <label for="email">Email</label>
+                    <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.</div>
+                    <div class="invalid-feedback" data-sb-feedback="email:email">Email Email is not valid.</div>
+                </div>
+                <fieldset disabled>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="actividadTour" aria-label="Actividad / Tour">
+                            <option value="{{ item.name }}">{{ item.name }}</option>
+                            <option value="Volcán del totumo">Volcán del totumo</option>
+                            <option value="Snorkeling Islas">Snorkeling Islas</option>
+                            <option value="City Tour - Poesía">City Tour - Poesía</option>
+                            <option value="Caballos en la Playa">Caballos en la Playa</option>
+                            <option value="Aviario Nacional">Aviario Nacional</option>
+                        </select>
+                        <label for="actividadTour">Actividad / Tour</label>
+                    </div>
+                </fieldset>
+                <script type="text/javascript">
+                $('#fechaDate').datepicker({
+                    format: "dd/mm/yyyy",
+                    autoclose: true,
+                    todayHighlight: true,
+                    datesDisabled: ['12/06/2023', '12/21/2023'],
+                    toggleActive: true
+                });
+                </script>
+                <div class="form-floating mb-3 input-group date">
+                    <input class="form-control" id="fechaDate" type="text" placeholder="Fecha / Date" data-sb-validations="required" data-provide="datepicker" /><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    <label for="fechaDate">Fecha / Date</label>
+                    <div class="invalid-feedback" data-sb-feedback="fechaDate:required">Fecha / Date is required.</div>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="solicitudesRequests" type="text" placeholder="Solicitudes / Requests" style="height: 10rem;" data-sb-validations="required"></textarea>
+                    <label for="solicitudesRequests">Solicitudes / Requests</label>
+                    <div class="invalid-feedback" data-sb-feedback="solicitudesRequests:required">Solicitudes / Requests is required.</div>
+                </div>
+                <div class="d-none" id="submitSuccessMessage">
+                    <div class="text-center mb-3">
+                        <div class="fw-bolder">Form submission successful!</div>
+                        <p>To activate this form, sign up at</p>
+                        <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                    </div>
+                </div>
+                <div class="d-none" id="submitErrorMessage">
+                    <div class="text-center text-danger mb-3">Error sending message!</div>
+                </div>
+                <p class="fs-6 fw-lighter">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer finibus est in tellus posuere dapibus. Nam vitae enim sit amet justo pulvinar pretium. Aliquam faucibus, ante ut cursus aliquam, orci nunc egestas dui, at accumsan quam nulla sed diam. Curabitur sagittis mauris ut egestas volutpat. Nunc sed vestibulum augue. Etiam.
+                    &copy; 2023 Crossit</p>
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </main>
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+
+</html>
