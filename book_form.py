@@ -15,7 +15,7 @@ from sqlalchemy import text
 host = '0.0.0.0'
 port = '9090'
 
-app = Flask('book_form')
+app = Flask(__name__)
 root = os.path.join(app.root_path)
 app.config['RESIZE_URL'] = 'http://' + host + ':' + port + '/static'
 app.config['RESIZE_ROOT'] = root + '/static'
