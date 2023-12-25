@@ -1,11 +1,14 @@
 from sqlalchemy import create_engine
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
-usr = '37i3djj7iynnncqf0er1'
-pwd = 'pscale_pw_MOZsp0q6pht1TB4uHJzNPnNUjh3u7D9PSrOC2l2rkm6'
-host = 'aws.connect.psdb.cloud'
-db = 'tours'
+host= os.getenv("DB_HOST")
+user=os.getenv("DB_USERNAME")
+passwd= os.getenv("DB_PASSWORD")
+db= os.getenv("DB_NAME")
 
-connection_string = "mysql+pymysql://" + usr + ":" + pwd + "@" + host + ":3306/" + db
+connection_string = "mysql+pymysql://" + user + ":" + passwd + "@" + host + ":3306/" + db
 engine = create_engine(connection_string, 
                        echo=False,
                        connect_args={
