@@ -31,7 +31,7 @@ def load_tours_from_db(tour_id):
         return tours
 
 
-@app.route('/book', methods=['GET'])
+@app.route('/', methods=['GET'])
 def book_tour():
 
     email = request.args.get('em', 'best@experience.com')
