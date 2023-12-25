@@ -5,61 +5,53 @@
 
 from flask import Flask
 from flask import request
-from flask import jsonify
 from flask import render_template
-from flask import g
 import flask_resize
-import json
-import sqlite3
+import os
+from database import engine
+from sqlalchemy import text
 
+
+host = '0.0.0.0'
+port = '9090'
 
 app = Flask('book_form')
-app.config['RESIZE_URL'] = 'http://localhost:9090/static'
-app.config['RESIZE_ROOT'] = '/home/humberto/desarrollo/datos/hoteles/data_science/client_segm/apps/static'
+root = os.path.join(app.root_path)
+app.config['RESIZE_URL'] = 'http://' + host + ':' + port + '/static'
+app.config['RESIZE_ROOT'] = root + '/static'
 resize = flask_resize.Resize(app)
 
-DATABASE = 'tic.db'
 
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
-        def make_dicts(cursor, row):
-            return dict((cursor.description[idx][0], value)
-                        for idx, value in enumerate(row))
-        db.row_factory = make_dicts
-    return db
+def load_tours_from_db(tour_id):
+    with engine.connect() as conn:
+        result = conn.execute(text("select * from tours where id = " + tour_id))
+        tours = []
+        for row in result.all():
+            tours.append(dict(row._mapping))
+        return tours
 
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
 
 @app.route('/book', methods=['GET'])
 def book_tour():
 
-    arg0 = request.args.get('em')
-    arg1 = request.args.get('ht')
-    arg2 = request.args.get('ag')
-    arg3 = request.args.get('nm', 'Fulano')
-    arg4 = request.args.get('ng', '1')
-    arg5 = request.args.get('rc', '1')
-    arg6 = request.args.get('ac', '3')
+    email = request.args.get('em', 'best@experience.com')
+    hotel = request.args.get('ht', 'sublime exprience')
+    agency = request.args.get('ag', 'best experince in the world')
+    guest_name = request.args.get('nm', 'Fulano')
+    nights = request.args.get('ng', '1')
+    rcode = request.args.get('rc', '1')
+    activity_id = request.args.get('ac', '3')
+    activity = load_tours_from_db(activity_id)
 
-    cur = get_db().cursor()
-    sql = 'SELECT * FROM tic WHERE id =' + arg6 + ';'
-    arg7 = cur.execute(sql).fetchall()
+    return render_template('book.html', email=email, hotel=hotel, agency=agency,
+                            name=guest_name, nights=nights, rcode=rcode,
+                            activity=activity)
 
-## TODO def get_message_uuid(), pass it as a variable
-
-    return render_template('book.html', email=arg0, hotel=arg1, agency=arg2,
-                            name=arg3, nights=arg4, rcode=arg5,
-                            activity=arg7)
-
-@app.route('/request', methods=['POST'])
+@app.route('/request_book', methods=['POST'])
 def request_tour():
     pass
  
+
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=9090)
+    app.run(debug=True, host=host, port=port)
+

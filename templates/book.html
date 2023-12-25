@@ -17,7 +17,7 @@
     <main>
         <div class="container px-3 my-3">
             <div class="alert alert-light" role="alert">
-                {% if hotel == 'qr' %} QUERO {% else %} {{hotel}} {% endif %} Estás a punto de mejorar tu experiencia en Cartagena de Indias, buena elección!
+                <strong>{% if hotel == 'qr' %} QUERO {% else %} {{hotel}} {% endif %}</strong> Te invita a mejorar tu experiencia en Cartagena de Indias, buena elección!
             </div>
             <header class="p-1 mb-1">
                 <div class="container">
@@ -26,16 +26,16 @@
                     <div class="card">
                         <!-- style="width: 18rem;" -->
                         <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="{{ '/home/humberto/desarrollo/datos/hoteles/data_science/client_segm/apps/static/image5_3.png'|resize('300x300', format='jpg') }}" class="card-img-top img-fluid" alt="{{ item.name }}">
+                            <div class="col-md-4"> <!-- TODO apply |resize('300x300', format='jpg') -->
+                                <img src="{{ url_for('static', filename='image5_3.png') }}" class="card-img-top img-fluid" alt="{{ item.name }}">
                                 <div class="card-img-overlay">
                                     <span class="badge {% if item.category == 'Islands' or 'Nature' %} text-bg-success {%else%} text-bg-secondary {%endif%}">{{ item.category }}</span>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title"><strong>{{ item.name }}</strong> <span class="badge rounded-pill text-bg-info">Tiempo: {{ item.hours }} horas</span></h5>
-                                    <p class="card-text">{{ item.description|safe }}</p>
+                                    <h5 class="card-title"><strong>{{ item.name_en }}</strong> <span class="badge rounded-pill text-bg-info">Tiempo: {{ item.hours }} horas</span></h5>
+                                    <p class="card-text">{{ item.description_en|safe }}</p>
                                     <a href="#" class="btn btn-primary">Book!</a>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
             </header>
         </div>
         <div class="container px-3 my-3">
-            <form id="bookTourForm" method="post">
+            <form id="bookTourForm" method="post" action="request_book">
                 <div class="form-floating mb-3">
                     <input class="form-control" id="nombreName" type="text" placeholder="Nombre / Name" data-sb-validations="required" value="{{name}}"/>
                     <label for="nombreName">Nombre / Name</label>
@@ -59,12 +59,7 @@
                 <fieldset disabled>
                     <div class="form-floating mb-3">
                         <select class="form-select" id="actividadTour" aria-label="Actividad / Tour">
-                            <option value="{{ item.name }}">{{ item.name }}</option>
-                            <option value="Volcán del totumo">Volcán del totumo</option>
-                            <option value="Snorkeling Islas">Snorkeling Islas</option>
-                            <option value="City Tour - Poesía">City Tour - Poesía</option>
-                            <option value="Caballos en la Playa">Caballos en la Playa</option>
-                            <option value="Aviario Nacional">Aviario Nacional</option>
+                            <option value="{{ item.name_en }}">{{ item.name_en }}</option>
                         </select>
                         <label for="actividadTour">Actividad / Tour</label>
                     </div>
