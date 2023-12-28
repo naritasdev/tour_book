@@ -58,10 +58,10 @@ def request_tour():
         activity = load_tours_from_db(activity_id)
         fechaDate = request.form['fechaDate']
         solicitudesRequests = request.form['solicitudesRequests']
-        
+        return render_template('confirmation.html', name=guest_name, email=email, 
+                           activity=activity, fechaDate=fechaDate, solicitudesRequests=solicitudesRequests)
     
-    return render_template('confirmation.html', name=guest_name, email=email, 
-                           activity=activity, fechaDate=fechaDate, solicitudesRequests=solicitudesRequests) 
+     
 
 
 
