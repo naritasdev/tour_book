@@ -52,7 +52,7 @@ def book_tour():
 def request_tour():
     
 
-    guest_name = request.form['nombreName']
+    guest_name = request.form["nombreName"]
     email = request.form['email']
     activity_id = request.form['actividadTour']
     activity = load_tours_from_db(activity_id)
