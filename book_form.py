@@ -55,13 +55,14 @@ def request_tour():
 
     guest_name = request.form['nombreName']
     email = request.form['email']
-    activity = request.form['actividadTour']
+    #activity = request.form['actividadTour']
     fechaDate = request.form['fechaDate']
     solicitudesRequests = request.form['solicitudesRequests']
         
     
     return render_template('confirmation.html', name=guest_name, email=email, 
-                           activity=activity, fechaDate=fechaDate, solicitudesRequests=solicitudesRequests) 
+                           #activity=activity, 
+                           fechaDate=fechaDate, solicitudesRequests=solicitudesRequests) 
 
 
 
