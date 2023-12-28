@@ -46,19 +46,19 @@
         <div class="container px-3 my-3">
             <form id="bookTourForm" method="post" action="request_book">
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="nombreName" type="text" placeholder="Nombre / Name" data-sb-validations="required" value="{{name}}"/>
+                    <input class="form-control" id="nombreName" name="nombreName" type="text" placeholder="Nombre / Name" data-sb-validations="required" value="{{name}}"/>
                     <label for="nombreName">Nombre / Name</label>
                     <div class="invalid-feedback" data-sb-feedback="nombreName:required">Nombre / Name is required.</div>
                 </div>
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="email" type="email" placeholder="Email" data-sb-validations="required,email" value={{email}}/>
+                    <input class="form-control" id="email" name="email" type="email" placeholder="Email" data-sb-validations="required,email" value={{email}}/>
                     <label for="email">Email</label>
                     <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.</div>
                     <div class="invalid-feedback" data-sb-feedback="email:email">Email Email is not valid.</div>
                 </div>
                 <fieldset disabled>
                     <div class="form-floating mb-3">
-                        <select class="form-select" id="actividadTour" aria-label="Actividad / Tour">
+                        <select class="form-select" id="actividadTour" name="actividadTour" aria-label="Actividad / Tour">
                             <option value="{{ item.name_en }}">{{ item.name_en }}</option>
                         </select>
                         <label for="actividadTour">Actividad / Tour</label>
@@ -74,12 +74,12 @@
                 });
                 </script>
                 <div class="form-floating mb-3 input-group date">
-                    <input class="form-control" id="fechaDate" type="text" placeholder="Fecha / Date" data-sb-validations="required" data-provide="datepicker" /><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    <input class="form-control" id="fechaDate" name="fechaDate" type="text" placeholder="Fecha / Date" data-sb-validations="required" data-provide="datepicker" /><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     <label for="fechaDate">Fecha / Date</label>
                     <div class="invalid-feedback" data-sb-feedback="fechaDate:required">Fecha / Date is required.</div>
                 </div>
                 <div class="form-floating mb-3">
-                    <textarea class="form-control" id="solicitudesRequests" type="text" placeholder="Solicitudes / Requests" style="height: 10rem;" data-sb-validations="required"></textarea>
+                    <textarea class="form-control" id="solicitudesRequests" name="solicitudesRequests" type="text" placeholder="Solicitudes / Requests" style="height: 10rem;" data-sb-validations="required"></textarea>
                     <label for="solicitudesRequests">Solicitudes / Requests</label>
                     <div class="invalid-feedback" data-sb-feedback="solicitudesRequests:required">Solicitudes / Requests is required.</div>
                 </div>

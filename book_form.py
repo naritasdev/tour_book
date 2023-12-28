@@ -50,15 +50,16 @@ def book_tour():
 
 @app.route('/request_book', methods=['POST'])
 def request_tour():
-    if request.method == 'post':
+    import book.html
+    
 
-        guest_name = request.form['nombreName']
-        email = request.form['email']
-        activity_id = request.form['actividadTour']
-        activity = load_tours_from_db(activity_id)
-        fechaDate = request.form['fechaDate']
-        solicitudesRequests = request.form['solicitudesRequests']
-        return "OK"
+    guest_name = request.form['nombreName']
+    email = request.form['email']
+    activity_id = request.form['actividadTour']
+    activity = load_tours_from_db(activity_id)
+    fechaDate = request.form['fechaDate']
+    solicitudesRequests = request.form['solicitudesRequests']
+        
     
     return render_template('confirmation.html', name=guest_name, email=email, 
                            activity=activity, fechaDate=fechaDate, solicitudesRequests=solicitudesRequests) 
