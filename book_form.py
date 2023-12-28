@@ -55,7 +55,7 @@ def request_tour():
 
     guest_name = request.form['nombreName']
     email = request.form['email']
-    activity_id = request.form['actividadTour']
+    activity_id = request.args.get['ac', '3']
     activity = load_tours_from_db(activity_id)
     fechaDate = request.form['fechaDate']
     solicitudesRequests = request.form['solicitudesRequests']
