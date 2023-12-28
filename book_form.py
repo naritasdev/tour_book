@@ -10,6 +10,7 @@ import flask_resize
 import os
 from database import engine
 from sqlalchemy import text
+#from flask import url_for
 
 
 host = '0.0.0.0'
@@ -49,7 +50,21 @@ def book_tour():
 
 @app.route('/request_book', methods=['POST'])
 def request_tour():
-    pass
+    if request.method == 'post':
+
+        guest_name = request.form['nombreName']
+        email = request.form['email']
+        activity_id = request.form['actividadTour']
+        activity = load_tours_from_db(activity_id)
+        fechaDate = request.form['fechaDate']
+        solicitudesRequests = request.form['solicitudesRequests']
+        
+    
+    return render_template('confirmation.html', name=guest_name, email=email, 
+                           activity=activity, fechaDate=fechaDate, solicitudesRequests=solicitudesRequests) 
+
+
+
  
 
 if __name__ == '__main__':

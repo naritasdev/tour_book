@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Humberto Yances - Naritas">
+    <meta name="generator" content="">
+    <title>TITLE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <main>
+        <div class="container px-3 my-3">
+            <div class="alert alert-light" role="alert">
+                <strong>{% if name == 'qr' %} QUERO {% else %} {{name}} {% endif %}</strong> tu solicitud de reserva a sido realizada con éxito. Te encuentras próximo a mejorar tu experiencia en Cartagena de Indias, buena elección!
+            </div>
+            <header class="p-1 mb-1">
+                <div class="container">
+                    <p class="lead mb-4">Estos son los datos almacenados:</p>
+                    <ul>
+                        <li>
+                            Nombre/Name: {{name}}.
+                            Email: {{email}}.
+                            Actividad: {{activity}}.
+                            Fecha/Date: {{fechaDate}}.
+                            Solicitudes/Requests: {{solicitudesRequests}}.
+                        </li>
+                    </ul>
+            <p class="fs-6 fw-lighter">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer finibus est in tellus posuere dapibus. Nam vitae enim sit amet justo pulvinar pretium. Aliquam faucibus, ante ut cursus aliquam, orci nunc egestas dui, at accumsan quam nulla sed diam. Curabitur sagittis mauris ut egestas volutpat. Nunc sed vestibulum augue. Etiam.
+                &copy; 2023 Crossit</p>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for'/'}}">Realizar una nueva solicitud de reserva de tour.</a>  </li>
+                </ul>
+            </nav>
+    </main>
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+
+</html>                    
+
