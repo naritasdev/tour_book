@@ -50,7 +50,7 @@ def book_tour():
 
 @app.route('/request_book', methods=['POST'])
 def request_tour():
-    import book.html
+    
     
 
     guest_name = request.form['nombreName']
