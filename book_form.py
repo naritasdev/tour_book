@@ -10,7 +10,7 @@ import flask_resize
 import os
 from database import engine
 from sqlalchemy import text
-#from flask import url_for
+from flask import url_for
 
 
 host = '0.0.0.0'
