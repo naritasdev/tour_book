@@ -31,6 +31,19 @@ def load_tours_from_db(tour_id):
             tours.append(dict(row._mapping))
         return tours
 
+def load_request_from_db(request_id): # or request_name
+    with engine.connect() as conn:
+        result = conn.execute(text("select * from request where id = " + request_id))
+        request = []
+        for row in result.all():
+            request.append(dict(row._mapping))
+        return request
+
+def add_request_from_db(request_name, request_email, request_date, request_requests): 
+    with engine.connect() as conn:
+        result = conn.execute(text("insert into request (request_name,request_email,request_date,request_requests) values (%s, %s, %s) ", (request_name,request_email,request_date,request_requests)))
+        
+
 
 @app.route('/', methods=['GET'])
 def book_tour():
@@ -55,10 +68,13 @@ def request_tour():
 
     guest_name = request.form['nombreName']
     email = request.form['email']
-    #activity = request.form['actividadTour']
+    #activity_id = '3' 
+    #activity_name = request.form['actividadTour']
+    #activity = load_request_from_db(activity_id or activity_name)
+    
     fechaDate = request.form['fechaDate']
     solicitudesRequests = request.form['solicitudesRequests']
-        
+    add_request_from_db(guest_name,email,fechaDate,solicitudesRequests)    
     
     return render_template('confirmation.html', name=guest_name, email=email, 
                            #activity=activity, 
