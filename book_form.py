@@ -39,7 +39,7 @@ def load_request_from_db(request_id): # or request_name
             request.append(dict(row._mapping))
         return request
 
-def add_request_from_db(request_name, request_email, request_date, request_requests): 
+def add_request_from_db(self,request_name, request_email, request_date, request_requests): 
     with engine.connect() as conn:
         result = conn.execute(text("insert into request (name,email,date,requests) values ($s, $s, $s, $s)", (request_name, request_email, request_date, request_requests)))
         #conn.execute(result,
