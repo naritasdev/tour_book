@@ -4,7 +4,7 @@
 ## Copyright Humberto Yances, author. All rights reserved.
 
 from flask import Flask
-from flask import request,request
+from flask import request,requests
 from flask import render_template
 import flask_resize
 import os
