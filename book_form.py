@@ -4,14 +4,14 @@
 ## Copyright Humberto Yances, author. All rights reserved.
 
 from flask import Flask
-from flask import request,requests
+from flask import request
 from flask import render_template
 import flask_resize
 import os
 from database import engine
 from sqlalchemy import text
 from flask import url_for
-
+import requests
 
 host = '0.0.0.0'
 port = '9090'
