@@ -42,8 +42,7 @@ def load_request_from_db(request_id): # or request_name
 def add_request_from_db(data): 
     with engine.connect() as conn:
         result = text("insert into request (name,email,date,requests) values (:nombreName, :email, :fechaDate, :solicitudesRequests)" )
-        conn.execute(result,
-                     nombreName=data['nombreName'],
+        conn.execute(result,nombreName=data['nombreName'],
                      email=data['email'],
                      fechaDate=data['fechaDate'],
                      solicitudesRequests=data['solicitudesRequests'])
