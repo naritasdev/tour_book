@@ -41,8 +41,12 @@ def load_request_from_db(request_id): # or request_name
 
 def add_request_from_db(data): 
     with engine.connect() as conn:
-        result = text("insert into request (name,email,date,requests) values (data[0],data[1],data[2],data[3])" )
-        conn.execute(result)
+        result = text("insert into request (name,email,date,requests) values (:nombreName, :email, :fechaDate, :solicitudesRequests)" )
+        conn.execute(result,
+                     nombreName=data['nombreName'],
+                     email=data['email'],
+                     fechaDate=data['fechaDate'],
+                     solicitudesRequests=data['solicitudesRequests'])
         
 
 
@@ -75,7 +79,7 @@ def request_tour():
     
     fechaDate = request.form['fechaDate']
     solicitudesRequests = request.form['solicitudesRequests']
-    data = [guest_name,email,fechaDate,solicitudesRequests]
+    data = request.form
     add_request_from_db(data)    
     
     return render_template('confirmation.html', name=guest_name, email=email, 
