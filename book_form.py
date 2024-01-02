@@ -79,8 +79,54 @@ def request_tour():
     fechaDate = request.form['fechaDate']
     solicitudesRequests = request.form['solicitudesRequests']
     data = request.form
-    add_request_from_db(data)    
-    
+    add_request_from_db(data)
+    url= "https://api.brevo.com/v3/smtp/email"
+    payload = {
+    "sender": {
+        "name": "Mary from MyShop",
+        "email": "hyances@naritas.co"
+    },
+    "replyTo": {
+        "email": email,
+        "name": "Guest"
+    },
+    "to": [
+        {
+            "email": "daniel.pajaro98@gmail.com",
+            "name": "sublime exprience hotel"
+        },
+        {
+            "email": "hyances@naritas.co",
+            "name": "best experince in the world agency"
+        }
+    ],
+    "bcc": [
+        {
+            "email": "hyances@naritas.co",
+            "name": "Naritas"
+        }
+    ],
+    "cc": [
+        {
+            "email": "daniel.pajaro98@yahoo.com",
+            "name": "Tour book & management"
+        }
+    ],
+    "htmlContent": "<!DOCTYPE html> <html> <body> <h1> {{guest_name}} ha realizado una solicitud de reserva. </h1> <p>Estos son los datos almacenados:</p><ul><li>Nombre/Name: {{guest_name}}.</li><li>Email: {{email}}.</li>li>Fecha/Date: {{fechaDate}}.</li><li>Solicitudes/Requests: {{solicitudesRequests}}.</li></ul> </body> </html>",
+    "textContent": "Han realizado una solicitud de reserva.",
+    "subject": "Confirmación de solicitud de reserva.",
+    "tags": ["tourBookRequest"]
+    }    
+    headers = {
+    "accept": "application/json",
+    "content-type": "application/json",
+    "api-key": "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"
+    }
+    response = request.post(url, json=payload, headers=headers)
+
+    print(response.text)
+
+
     return render_template('confirmation.html', name=guest_name, email=email, 
                            #activity=activity, 
                            fechaDate=fechaDate, solicitudesRequests=solicitudesRequests) 
