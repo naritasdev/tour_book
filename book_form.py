@@ -4,7 +4,7 @@
 ## Copyright Humberto Yances, author. All rights reserved.
 
 from flask import Flask
-from flask import request
+from flask import request,request
 from flask import render_template
 import flask_resize
 import os
@@ -122,7 +122,7 @@ def request_tour():
     "content-type": "application/json",
     "api-key": "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"
     }
-    response = request.post(url, json=payload, headers=headers)
+    response = requests.post(url, json=payload, headers=headers)
 
     print(response.text)
 
