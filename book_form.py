@@ -9,9 +9,9 @@ from flask import render_template
 import flask_resize
 import os
 from database import engine
+from mailer import send_email
 from sqlalchemy import text
 from flask import url_for
-import requests
 
 host = '0.0.0.0'
 port = '9090'
@@ -24,6 +24,17 @@ resize = flask_resize.Resize(app)
 
 
 def load_tours_from_db(tour_id):
+    """
+
+    Parameters
+    ----------
+    tour_id :
+        
+
+    Returns
+    -------
+
+    """
     with engine.connect() as conn:
         result = conn.execute(text("select * from tours where id = " + tour_id))
         tours = []
@@ -32,6 +43,17 @@ def load_tours_from_db(tour_id):
         return tours
 
 def load_request_from_db(request_id): # or request_name
+    """
+
+    Parameters
+    ----------
+    request_id :
+        
+
+    Returns
+    -------
+
+    """
     with engine.connect() as conn:
         result = conn.execute(text("select * from request where id = " + request_id))
         request = []
@@ -40,6 +62,17 @@ def load_request_from_db(request_id): # or request_name
         return request
 
 def add_request_from_db(data): 
+    """
+
+    Parameters
+    ----------
+    data :
+        
+
+    Returns
+    -------
+
+    """
     with engine.connect() as conn:
         result = text("insert into request (name,email,date,requests) values (:nombreName, :email, :fechaDate, :solicitudesRequests)" )
         conn.execute(statement=result, parameters=dict( nombreName=data['nombreName'],
@@ -51,6 +84,7 @@ def add_request_from_db(data):
 
 @app.route('/', methods=['GET'])
 def book_tour():
+    """ """
 
     email = request.args.get('em', 'best@experience.com')
     hotel = request.args.get('ht', 'sublime exprience')
@@ -67,8 +101,11 @@ def book_tour():
 
 @app.route('/request_book', methods=['POST'])
 def request_tour():
-    
-    
+    """ 
+    A book request asked by hotel guest.  Registered in the database and send 
+      emails to each party involved: guest, hotel, agency and tech provider. 
+
+    """
 
     guest_name = request.form['nombreName']
     email = request.form['email']
@@ -79,59 +116,34 @@ def request_tour():
     fechaDate = request.form['fechaDate']
     solicitudesRequests = request.form['solicitudesRequests']
     data = request.form
+    # save request to database
     add_request_from_db(data)
-    url= "https://api.brevo.com/v3/smtp/email"
-    payload = {
-    "sender": {
-        "name": "Mary from MyShop",
-        "email": "hyances@naritas.co"
-    },
-    "replyTo": {
-        "email": email,
-        "name": "Guest"
-    },
-    "to": [
-        {
-            "email": "daniel.pajaro98@gmail.com",
-            "name": "sublime exprience hotel"
-        },
-        {
-            "email": "hyances@naritas.co",
-            "name": "best experince in the world agency"
-        }
-    ],
-    "bcc": [
-        {
-            "email": "hyances@naritas.co",
-            "name": "Naritas"
-        }
-    ],
-    "cc": [
-        {
-            "email": "daniel.pajaro98@yahoo.com",
-            "name": "Tour book & management"
-        }
-    ],
-    "htmlContent": "<!DOCTYPE html> <html> <body> <h1> {{guest_name}} ha realizado una solicitud de reserva. </h1> <p>Estos son los datos almacenados:</p><ul><li>Nombre/Name: {{guest_name}}.</li><li>Email: {{email}}.</li>li>Fecha/Date: {{fechaDate}}.</li><li>Solicitudes/Requests: {{solicitudesRequests}}.</li></ul> </body> </html>",
-    "textContent": "Han realizado una solicitud de reserva.",
-    "subject": "Confirmación de solicitud de reserva.",
-    "tags": ["tourBookRequest"]
-    }    
-    headers = {
-    "accept": "application/json",
-    "content-type": "application/json",
-    "api-key": "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"
-    }
-    response = requests.post(url, json=payload, headers=headers)
+    # send request copy by email
+    htmlContent = "<!DOCTYPE html> <html> <body> <h1> {{guest_name}} ha realizado \
+                   una solicitud de reserva. </h1> <p>Estos son los datos almacenados: \
+                   </p><ul><li>Nombre/Name: {{guest_name}}.</li><li>Email: {{email}}. \
+                   </li>li>Fecha/Date: {{fechaDate}}.</li><li>Solicitudes/Requests: \
+                   {{solicitudesRequests}}.</li></ul> </body> </html>"
+    textContent = "Han realizado una solicitud de reserva."
+    subject = "Confirmación de solicitud de reserva."
+    tags='["tourBookRequest"]'
 
-    print(response.text)
-
+    mailer_response = send_email(
+        sender=('hotel', 'info@naritas.co'),
+               reply=('noreply', 'noreply@reply.hotel.com'),
+               to=[(guest_name, email)],
+               cc=[('hotel', 'test1@naritas.co'), ('agency', 'test2@naritas.co')],
+               bcc=[('techProvider', 'soporte@naritas.co'), 
+                    ('sales', 'sales@naritas.co')],
+               htmlContent=htmlContent,
+               textContent=textContent,
+               subject=subject,
+               tags=tags
+              )
 
     return render_template('confirmation.html', name=guest_name, email=email, 
                            #activity=activity, 
-                           fechaDate=fechaDate, solicitudesRequests=solicitudesRequests) 
-
-
+                           fechaDate=fechaDate, solicitudesRequests=solicitudesRequests, mailer_response=mailer_response) 
 
  
 

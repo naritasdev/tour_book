@@ -25,18 +25,22 @@
                     <ul>
                         <li>Nombre/Name: {{name}}.</li>
                         <li>Email: {{email}}.</li>
-                            
                         <li>Fecha/Date: {{fechaDate}}.</li>
                         <li>Solicitudes/Requests: {{solicitudesRequests}}.</li>
-                        
                     </ul>
-            <p class="fs-6 fw-lighter">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer finibus est in tellus posuere dapibus. Nam vitae enim sit amet justo pulvinar pretium. Aliquam faucibus, ante ut cursus aliquam, orci nunc egestas dui, at accumsan quam nulla sed diam. Curabitur sagittis mauris ut egestas volutpat. Nunc sed vestibulum augue. Etiam.
-                &copy; 2023 Crossit</p>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('book_tour')}}">Realizar una nueva solicitud de reserva de tour.</a>  </li>
-                </ul>
-            </nav>
+                    <p class="fs-6 fw-lighter">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer finibus est in tellus posuere dapibus. Nam vitae enim sit amet justo pulvinar pretium. Aliquam faucibus, ante ut cursus aliquam, orci nunc egestas dui, at accumsan quam nulla sed diam. Curabitur sagittis mauris ut egestas volutpat. Nunc sed vestibulum augue. Etiam.
+                        &copy; 2023 Crossit</p>
+                    <!-- delete./ just for test, delete after pass tests -->
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Mailer Response: </strong> {{mailer_response}}.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <!-- /.delete -->
+                    <nav>
+                        <ul>
+                            <li><a href="{{ url_for('book_tour')}}">Realizar una nueva solicitud de reserva de tour.</a> </li>
+                        </ul>
+                    </nav>
     </main>
     <footer class="my-5 pt-5 text-body-secondary text-center text-small">
         <ul class="list-inline">
@@ -49,5 +53,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
-</html>                    
-
+</html>
