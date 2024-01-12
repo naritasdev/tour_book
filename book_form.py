@@ -74,11 +74,16 @@ def add_request_from_db(data):
 
     """
     with engine.connect() as conn:
-        result = text("insert into request (name,email,date,requests) values (:nombreName, :email, :fechaDate, :solicitudesRequests)" )
+        result = text("insert into request (name,email,activity,date,requests,hotel,agency,category,description) values (:nombreName, :email, :actividadTour, :fechaDate, :solicitudesRequests), :hotel, :agency, :category, :description" )
         conn.execute(statement=result, parameters=dict( nombreName=data['nombreName'],
                      email=data['email'],
+                     actividadTour=data['actividadTour'],
                      fechaDate=data['fechaDate'],
-                     solicitudesRequests=data['solicitudesRequests']))
+                     solicitudesRequests=data['solicitudesRequests'],
+                     hotel=data['hotel'],
+                     agency=data['agency'],
+                     category=data['category'],
+                     description=data['description']))
         
 
 
@@ -112,9 +117,14 @@ def request_tour():
     #activity_id = '3' 
     #activity_name = request.form['actividadTour']
     #activity = load_request_from_db(activity_id or activity_name)
-    
+    hotel = request.form['hotel']
+    agency = request.form['agency']
+    activity = request.form['actividadTour']
+    category = request.form['category']
     fechaDate = request.form['fechaDate']
     solicitudesRequests = request.form['solicitudesRequests']
+    category = request.form['category']
+    description = request.form['description']
     data = request.form
     # save request to database
     add_request_from_db(data)
@@ -122,7 +132,12 @@ def request_tour():
     htmlContent = "<!DOCTYPE html> <html> <body> <h1> {{guest_name}} ha realizado \
                    una solicitud de reserva. </h1> <p>Estos son los datos almacenados: \
                    </p><ul><li>Nombre/Name: {{guest_name}}.</li><li>Email: {{email}}. \
-                   </li>li>Fecha/Date: {{fechaDate}}.</li><li>Solicitudes/Requests: \
+                   </li><li>Hotel: {{hotel}}.</li> \
+                   </li><li>Agencia/Agency: {{agency}}.</li> \
+                   </li><li>Actividad/Activity: {{actividadTour}}.</li> \
+                   </li><li>Categoría/Category: {{category}}.</li> \
+                   </li><li>Descripción/Description: {{description}}.</li> \
+                   <li>Fecha/Date: {{fechaDate}}.</li><li>Solicitudes/Requests: \
                    {{solicitudesRequests}}.</li></ul> </body> </html>"
     textContent = "Han realizado una solicitud de reserva."
     subject = "Confirmación de solicitud de reserva."
@@ -142,8 +157,8 @@ def request_tour():
               )
 
     return render_template('confirmation.html', name=guest_name, email=email, 
-                           #activity=activity, 
-                           fechaDate=fechaDate, solicitudesRequests=solicitudesRequests, mailer_response=mailer_response) 
+                           activity=activity, 
+                           fechaDate=fechaDate, solicitudesRequests=solicitudesRequests, mailer_response=mailer_response, hotel=hotel, agency=agency, category=category, description=description) 
 
  
 

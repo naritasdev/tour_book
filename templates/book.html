@@ -51,17 +51,49 @@
                     <div class="invalid-feedback" data-sb-feedback="nombreName:required">Nombre / Name is required.</div>
                 </div>
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="email" name="email" type="email" placeholder="Email" data-sb-validations="required,email" value={{email}}/>
-                    <label for="email">Email</label>
+                    <input class="form-control" id="email" name="email" type="email" placeholder="Correo / Email" data-sb-validations="required,email" value={{email}}/>
+                    <label for="email">Correo / Email</label>
                     <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.</div>
                     <div class="invalid-feedback" data-sb-feedback="email:email">Email Email is not valid.</div>
                 </div>
-                <fieldset disabled>
+                <fieldset >
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="hotel" name="hotel" aria-label="Hotel">
+                            <option value="{{ hotel }}">{{ hotel }}</option>
+                        </select>
+                        <label for="hotel">Hotel</label>
+                    </div>
+                </fieldset>
+                <fieldset >
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="agency" name="agency" aria-label="Agencia / Agency">
+                            <option value="{{ agency }}">{{ agency }}</option>
+                        </select>
+                        <label for="agency">Agencia / Agency</label>
+                    </div>
+                </fieldset>
+                <fieldset >
                     <div class="form-floating mb-3">
                         <select class="form-select" id="actividadTour" name="actividadTour" aria-label="Actividad / Tour">
                             <option value="{{ item.name_en }}">{{ item.name_en }}</option>
                         </select>
                         <label for="actividadTour">Actividad / Tour</label>
+                    </div>
+                </fieldset>
+                <fieldset >
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="category" name="category" aria-label="Categoría / Category">
+                            <option value="{{ item.category }}">{{ item.category }}</option>
+                        </select>
+                        <label for="category">Categoría / Category</label>
+                    </div>
+                </fieldset>
+                <fieldset >
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="description" name="description" aria-label="Descripción / Description">
+                            <option value="{{ item.description_en }}">{{ item.description_en }}</option>
+                        </select>
+                        <label for="description">Descripción / Description</label>
                     </div>
                 </fieldset>
                 <script type="text/javascript">
@@ -74,7 +106,7 @@
                 });
                 </script>
                 <div class="form-floating mb-3 input-daterange input-group date">
-                    <input class="form-control" id="fechaDate" name="fechaDate" type="text" placeholder="Fecha / Date" data-sb-validations="required" data-provide="datepicker" data-date-format="DD, MM d" /><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    <input class="form-control" id="fechaDate" name="fechaDate" type="text" placeholder="Fecha / Date" value="2023-12-24" data-sb-validations="required" data-provide="datepicker" data-date-format="DD, MM d" /><div class="input-group-addon"><span class="glyphicon glyphicon-th"></span></div>
                     <label for="fechaDate">Fecha / Date</label>
                     <div class="invalid-feedback" data-sb-feedback="fechaDate:required">Fecha / Date is required.</div>
                 </div>
